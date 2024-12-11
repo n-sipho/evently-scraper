@@ -5,12 +5,13 @@ import { UserModel } from "../models/user.model";
 const GoogleStrategy = passportGoogle.Strategy;
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID as string;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET as string;
+const GOOGLE_CALLBACK_URL = process.env.GOOGLE_CALLBACK_URL as string;
 
 passport.use(
     new GoogleStrategy({
         clientID: GOOGLE_CLIENT_ID,
         clientSecret: GOOGLE_CLIENT_SECRET,
-        callbackURL: "http://localhost:3000/api/auth/google/callback",
+        callbackURL: GOOGLE_CALLBACK_URL,
     },
         async (accessToken, refreshToken, profile, done) => {
             const email = profile.emails?.[0].value as string;
@@ -28,7 +29,7 @@ passport.use(
                     updated_at: new Date(),
                 });
 
-                if(newUser){
+                if (newUser) {
                     const user = newUser[0];
                     done(null, user);
                 }

@@ -6,7 +6,7 @@ import passport from "passport";
 export class AuthService {
     /**
      * createAccount
-     */
+     */ 
     static createAccount = async (data: User) => {
         const salt = await genSalt();
         const hashedPassword = await hash(data.password, salt);
@@ -21,10 +21,8 @@ export class AuthService {
     }
 
     static signInWithGoogle = async () => {
-        // passport.authenticate("google", { scope: ["profile", "email"] });
     }
 
     static googleAuthCallBack = async () => {
-        // passport.authenticate("google");
     }
 }
