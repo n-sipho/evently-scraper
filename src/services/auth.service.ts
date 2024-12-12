@@ -20,9 +20,9 @@ export class AuthService {
         // return { token, email: user.email, type: user.type };
     }
 
-    static signInWithGoogle = async () => {
-    }
+    // static signInWithGoogle = async () => {
+    // }
 
-    static googleAuthCallBack = async () => {
-    }
+    // static googleAuthCallBack = async () => {
+    // }
 }

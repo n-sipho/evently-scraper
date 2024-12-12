@@ -6,8 +6,8 @@ export const authRoutes = Router();
 
 authRoutes.get(
     "/auth/google",
-    passport.authenticate("google", { scope: ["profile", "email"] }),
-    AuthController.handleGoogleSignIn
+    passport.authenticate("google", { scope: ["profile", "email"] })
+    // AuthController.handleGoogleSignIn
 );
 
 authRoutes.get(
