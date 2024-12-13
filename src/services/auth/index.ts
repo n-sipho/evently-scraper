@@ -1,7 +1,6 @@
 import { hashSync, compareSync, compare, hash, genSalt } from "bcryptjs";
-import { User } from "../types/interfaces";
-import { UserModel } from "../models/user.model";
-import passport from "passport";
+import { User } from "../../types/interfaces";
+import { UserModel } from "../../models/user.model";
 
 export class AuthService {
     /**

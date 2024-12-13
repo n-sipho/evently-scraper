@@ -1,15 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 
 
-export class AuthController {
-    static handleGoogleSignIn = async (req: Request, res: Response, next: NextFunction) => {
-        try {
-            // await AuthService.signInWithGoogle();
-        } catch (error) {
-            next(error);
-        }
-    }
-
+export class GoogleAuthController {
     static handleGoogleCallBack = async (req: Request, res: Response, next: NextFunction) => {
         try {
             res.send('Google callback successful');

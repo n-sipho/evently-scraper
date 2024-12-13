@@ -1,0 +1,36 @@
+[2024-12-12T21:10:56.210Z] info:  GET /spotify/connect   -  ms
+
+[2024-12-12T21:10:56.833Z] info:  GET /spotify/callback?code=AQAMPzmpENwpl4gEmtpZHGWbhXGGgcVxFTQV5wvjuKQR5YxwLYpUSPqLqy_bWAOtOFYGv75Rn8BvS9-CCqxZrWDJD-ovuk1EUAUwOLAG8rgmrhLAxlMDiR8zSPrrOeHAYw8GbDuwFzhILR5-v_E5w0j3C1CbKzt5I6vRIdRMkeuVCyYxIiHDrzJfTKH_PK63MfK4wI1mJNnrdoEkG5AhtzKmMzz3SJhVmYUowiVf&state=ef26dfea92b02654   -  ms
+
+[2024-12-12T21:12:33.091Z] info:  GET /spotify/callback?code=AQAMPzmpENwpl4gEmtpZHGWbhXGGgcVxFTQV5wvjuKQR5YxwLYpUSPqLqy_bWAOtOFYGv75Rn8BvS9-CCqxZrWDJD-ovuk1EUAUwOLAG8rgmrhLAxlMDiR8zSPrrOeHAYw8GbDuwFzhILR5-v_E5w0j3C1CbKzt5I6vRIdRMkeuVCyYxIiHDrzJfTKH_PK63MfK4wI1mJNnrdoEkG5AhtzKmMzz3SJhVmYUowiVf&state=ef26dfea92b02654   -  ms
+
+[2024-12-12T21:17:28.033Z] info:  GET /spotify/connect   -  ms
+
+[2024-12-12T21:17:28.753Z] info:  GET /spotify/callback?code=AQD25v9EWdWLa7PfLhcl7dpXSJX4-TQHG7uLjSOCSAj_xW_6lLOraTWX2xUX1vofYwlXYSXqWqdVJ4_8sNPQFlnFumoYYCzSGJjNeq-FYfLtiSSFX6yD7RLY_RyQOwMKWvPKGZCbXSRn_FWRqLy1oIVhSYtfjbHfhK4GKKBuqSuiQqQsjQEf7owTSCrtF0qU99bmYzLBRdfZlNL2rZottvuJxZQbFJr7sgKZ3u1g&state=aa60e686cab06ae2   -  ms
+
+[2024-12-12T21:26:30.164Z] info:  GET /spotify/connect   -  ms
+
+[2024-12-12T21:26:31.445Z] info:  GET /spotify/callback?code=AQCa4rUnMlrYpU4ul0Xo4Aad2ZnuhvL5AFbXyDfCtrVB4xv3QDYLUTzjJ5yaEkuPQ5XiKh9RitFu7DKukWUoXPsJGYbKavyB6kXWwmbQietrFKWC0llzz5vNQPqPwVYRZbiGYToib86x2AH7iA26ODTFAKc0AJM9TiiiF6JDh0mtyRBflg3gt-z99yv4Z_ivTtTA0Zuyb9NFOmbe2weUCt-EymOCHN-IhLo0SjLS&state=975ba70270817fcb   -  ms
+
+[2024-12-12T21:28:07.608Z] info:  GET /spotify/callback?code=AQCa4rUnMlrYpU4ul0Xo4Aad2ZnuhvL5AFbXyDfCtrVB4xv3QDYLUTzjJ5yaEkuPQ5XiKh9RitFu7DKukWUoXPsJGYbKavyB6kXWwmbQietrFKWC0llzz5vNQPqPwVYRZbiGYToib86x2AH7iA26ODTFAKc0AJM9TiiiF6JDh0mtyRBflg3gt-z99yv4Z_ivTtTA0Zuyb9NFOmbe2weUCt-EymOCHN-IhLo0SjLS&state=975ba70270817fcb   -  ms
+
+[2024-12-12T21:29:51.848Z] info:  GET /spotify/callback?code=AQCa4rUnMlrYpU4ul0Xo4Aad2ZnuhvL5AFbXyDfCtrVB4xv3QDYLUTzjJ5yaEkuPQ5XiKh9RitFu7DKukWUoXPsJGYbKavyB6kXWwmbQietrFKWC0llzz5vNQPqPwVYRZbiGYToib86x2AH7iA26ODTFAKc0AJM9TiiiF6JDh0mtyRBflg3gt-z99yv4Z_ivTtTA0Zuyb9NFOmbe2weUCt-EymOCHN-IhLo0SjLS&state=975ba70270817fcb   -  ms
+
+[2024-12-12T21:30:56.707Z] info:  POST /spotify/callback   -  ms
+
+[2024-12-12T21:30:56.727Z] error:  POST /spotify/callback 404 156 - 17.662 ms  
+
+[2024-12-12T21:31:02.903Z] info:  GET /spotify/callback   -  ms
+
+[2024-12-12T21:32:09.620Z] info:  GET /spotify/callback   -  ms
+
+[2024-12-12T21:32:29.196Z] info:  GET /spotify/callback   -  ms
+
+[2024-12-12T21:36:36.466Z] info:  GET /spotify/connect   -  ms
+
+[2024-12-12T21:36:38.602Z] info:  GET /spotify/callback?code=AQB1DJg6FpNqG6LkbQd8PoRDGe-LXrFL6rdauSQwn9X9I_zxheomTO5neSZh5q-f3SPFl-6omX3hSzbfcT7kDpwcBXrUPBFlmI7pKbDyfsiEntPrSj6EDNxqGp5fuZVzYgQX_7jNxEr-eJdRdL6x-xThI9x7J97DzzcLUpnuLb-nfBdd0uerOCFm_l9hBEFDIvKEC__MMxqg2Zgc4_dmYIRbumIZu_d9o1Y_mdIl&state=e2bf48755c97943f   -  ms
+
+[2024-12-12T21:42:25.222Z] info:  GET /spotify/connect   -  ms
+
+[2024-12-12T21:59:02.516Z] info:  GET /spotify/connect   -  ms
+

@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import querystring from "querystring";
 import { generateRandomString } from "../../utils/utils"
 import axios from "axios";
-import passport from "passport";
+import { ApiError } from "../../utils/api-error";
 
 const client_id = process.env.SPOTIFY_ID as string; // your clientId
 const client_secret = process.env.SPOTIFY_SECRET as string; // Your secret
@@ -12,14 +12,14 @@ const state = generateRandomString(16);
 
 export class SpotifyService {
     /**
-     * spotifyConnect()
+     * connectSpotify()
      * 
      * This function will connect to spotify and return the access token
      */
     static connectSpotify = async (res: Response) => {
         res.cookie(stateKey, state);
-        // passport.serializeUser
         const scope = 'user-read-private user-read-email';
+        
         res.redirect('https://accounts.spotify.com/authorize?' +
             querystring.stringify({
                 response_type: 'code',
@@ -33,17 +33,13 @@ export class SpotifyService {
     static connectSpotifyComplete = async (req: Request, res: Response) => {
         // your application requests refresh and access tokens
         // after checking the state parameter
-
         const code = req.query.code || null;
         const state = req.query.state || null;
-        
+
         const storedState = req.cookies ? req.cookies[stateKey] : null;
-        
+
         if (state === null || state !== storedState) {
-            res.redirect('/#' +
-                querystring.stringify({
-                    error: 'state_mismatch'
-                }));
+            throw new ApiError("State mismatch", 400);
         } else {
             res.clearCookie(stateKey);
             const authOptions = {
@@ -59,11 +55,14 @@ export class SpotifyService {
                 },
             };
 
-            axios.post(authOptions.url, authOptions.form, { headers: authOptions.headers })
+            await axios
+                .post(authOptions.url,
+                    authOptions.form,
+                    { headers: authOptions.headers }
+                )
                 .then(response => {
                     if (response.status === 200) {
                         const { access_token, refresh_token } = response.data;
-                        
                         // Pass the token to the browser to make requests from there
                         res.redirect('/spotify/callback' +
                             querystring.stringify({
@@ -71,18 +70,8 @@ export class SpotifyService {
                                 refresh_token: refresh_token
                             }));
                     } else {
-                        res.redirect('/#' +
-                            querystring.stringify({
-                                error: 'invalid_token'
-                            }));
+                        throw new ApiError("Invalid token", 400);
                     }
-                })
-                .catch(err => {
-                    console.error('Error during authentication:', err.message);
-                    res.redirect('/#' +
-                        querystring.stringify({
-                            error: 'invalid_token'
-                        }));
                 });
         }
     }
