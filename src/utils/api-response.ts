@@ -1,9 +1,23 @@
 import { Response } from "express";
 
-export class ApiResponse extends Response {
+export class ApiResponse {
     statusCode: number;
-    constructor(statusCode: number, message: string, data: {},) {
-        super(message, data);
+    constructor(statusCode = 200) {
         this.statusCode = statusCode;
+    }
+
+    error = (message: string, res: Response) => {
+        return res.status(this.statusCode).json({
+            status: false,
+            message,
+        })
+    }
+
+    success = (message: string, data: any, res: Response) => {
+        return res.status(this.statusCode).json({
+            status: true,
+            message,
+            data
+        })
     }
 }

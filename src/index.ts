@@ -12,9 +12,10 @@ import { router } from './routes';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(express.json());
 
 app.use(session({
-    secret: process.env.SECRET as string, // Replace with a strong secret key
+    secret: process.env.SECRET as string,
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false } // Set to true for production environments
@@ -27,8 +28,6 @@ app.use(cookieParser());
 
 app.use(errorMorgan);
 app.use(infoMorgan);
-
-app.use(express.json());
 
 app.use(router);
 

@@ -1,26 +1,19 @@
 import { NextFunction, Request, Response } from "express";
-import { SpotifyService } from "../../services/spotify";
+import { SpotifyService } from "../../services/spotify/spotify.service";
+import { ApiResponse } from "../../utils/api-response";
 
 export class SpotifyController {
-
-    static handleSpotifyConnection = async (req: Request, res: Response, next: NextFunction) => {
+    static handleConnection = async (req: Request, res: Response, next: NextFunction) => {
         try {
-           await SpotifyService.connectSpotify(res);
+           await SpotifyService.connect(res);
         } catch (error) {
             next(error);
         }
     }
-
-    static handleSpotifyCallback = async (req: Request, res: Response, next: NextFunction) => {
+    static handleCallback = async (req: Request, res: Response, next: NextFunction) => {
         try {
-           await SpotifyService.connectSpotifyComplete(req, res);
-        } catch (error) {
-            next(error);
-        }
-    }
-    static handleSpotifyTokenRefresh = async (req: Request, res: Response, next: NextFunction) => {
-        try {
-            SpotifyService.refreshSpotifyToken(req, res);
+          const resp = await SpotifyService.connectComplete(req, res);
+        //   new ApiResponse(200,"Spotify successfuly connected",resp)
         } catch (error) {
             next(error);
         }

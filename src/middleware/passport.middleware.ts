@@ -1,17 +1,15 @@
 import passport from "passport";
-import passportGoogle from "passport-google-oauth20";
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { UserModel } from "../models/user.model";
 
-const GoogleStrategy = passportGoogle.Strategy;
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID as string;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET as string;
-const GOOGLE_CALLBACK_URL = process.env.GOOGLE_CALLBACK_URL as string;
 
 passport.use(
     new GoogleStrategy({
         clientID: GOOGLE_CLIENT_ID,
         clientSecret: GOOGLE_CLIENT_SECRET,
-        callbackURL: GOOGLE_CALLBACK_URL,
+        callbackURL: "http://localhost:3000/google/callback",
     },
         async (accessToken, refreshToken, profile, done) => {
             const email = profile.emails?.[0].value as string;
@@ -31,10 +29,10 @@ passport.use(
 
                 if (newUser) {
                     const user = newUser[0];
-                    done(null, user);
+                    return done(null, user);
                 }
             }
-            done(null, user);
+            return done(null, user);
         })
 );
 
