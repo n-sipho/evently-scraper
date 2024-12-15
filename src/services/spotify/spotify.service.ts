@@ -103,6 +103,8 @@ export class SpotifyService {
         const response = await axios.post(authOptions.url, authOptions.form, { headers: authOptions.headers })
         if (response.status === 200) {
             const { access_token, refresh_token, token_type, expires_in } = response.data;
+            console.log("TOKEN REFRESH RESPONSE:", response.data);
+
             return {
                 access_token: access_token,
                 refresh_token: refresh_token,
@@ -115,17 +117,21 @@ export class SpotifyService {
     }
     static getArtist = async (req: Request) => {
         const user = req.user;
-        if (user) {
-            const userId = user.id as number;
-            const resp = await SpotifyModel.getToken(userId);
-            const token = resp[0].token;
-            const decryptedData = decrypt(token);
-
-            const accessToken = JSON.parse(decryptedData) as SpotifyToken;
-            const spotifyApi = SpotifyApi.withAccessToken(client_id, accessToken);
-            const followedArtists = await spotifyApi.currentUser.followedArtists();
-            return followedArtists.artists.items;
+        if (!user) {
+            throw new ApiError("Session expired", 440);
         }
-        throw new ApiError("Session expired", 440);
+
+        const userId = user.id as number;
+        const resp = await SpotifyModel.getToken(userId);
+
+        const token = resp[0].token;
+        const decryptedData = decrypt(token);
+
+        const accessToken = JSON.parse(decryptedData) as SpotifyToken;
+        const spotifyApi = SpotifyApi.withAccessToken(client_id, accessToken);
+
+        const followedArtists = await spotifyApi.currentUser.followedArtists();
+        console.log("FOLLOWED ARTISTS:", followedArtists.artists.items);
+        return followedArtists.artists.items;
     }
 }

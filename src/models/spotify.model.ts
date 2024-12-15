@@ -8,4 +8,7 @@ export class SpotifyModel {
     static getToken = async (userId: number) => {
         return await db<Token>("tokens").where({ user_id: userId });
     }
+    static updateToken = async (token: string, userId: number) => {
+        return await db<Token>("tokens").update({ token }).where({ id: userId });
+    }
 }
