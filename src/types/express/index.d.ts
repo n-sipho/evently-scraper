@@ -1,7 +1,8 @@
-import { UserType } from '../user';
+import { User as Person } from "../user";
 
 declare global {
     namespace Express {
-        interface User extends UserType { }
+        interface User extends Person { }
     }
 }
+

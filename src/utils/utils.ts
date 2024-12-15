@@ -8,14 +8,17 @@ export const generateRandomString = (length: number) => {
         .slice(0, length);
 }
 
-
+type Token = {
+    access_token: string;
+    refresh_token: string;
+}
 export const encrypt = (data: string): string => {
     const key = process.env.ENCRYPTION_KEY as string;
     const encrypted = CryptoJS.AES.encrypt(data, key).toString();
     return encrypted;
 }
 
-export const decrypt = (encryptedData: string, iv: string): string => {
+export const decrypt = (encryptedData: string): string => {
     const key = process.env.ENCRYPTION_KEY as string;
     const bytes = CryptoJS.AES.decrypt(encryptedData, key);
     const decryptedData = bytes.toString(CryptoJS.enc.Utf8);

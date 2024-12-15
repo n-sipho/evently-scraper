@@ -11,7 +11,7 @@ passport.use(
         clientSecret: GOOGLE_CLIENT_SECRET,
         callbackURL: "http://localhost:3000/google/callback",
     },
-        async (accessToken, refreshToken, profile, done) => {
+        async (_accessToken, _refreshToken, profile, done) => {
             const email = profile.emails?.[0].value as string;
             const resp = await UserModel.getUserByEmail(email);
             const user = resp[0];
@@ -23,16 +23,14 @@ passport.use(
                     last_name: lastName,
                     email: email,
                     password: "google",
-                    created_at: new Date(),
-                    updated_at: new Date(),
                 });
 
                 if (newUser) {
                     const user = newUser[0];
-                    return done(null, user);
+                    done(null, user);
                 }
             }
-            return done(null, user);
+            done(null, user);
         })
 );
 

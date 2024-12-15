@@ -1,6 +1,6 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import querystring from "querystring";
-import { encrypt, generateRandomString } from "../../utils/utils"
+import { decrypt, encrypt, generateRandomString } from "../../utils/utils"
 import axios from "axios";
 import { ApiError } from "../../utils/api-error";
 import { SpotifyModel } from "../../models/spotify.model";
@@ -21,7 +21,7 @@ export class SpotifyService {
      */
     static connect = async (res: Response) => {
         res.cookie(stateKey, state);
-        const scope = 'user-read-private user-read-email';
+        const scope = 'user-follow-read user-top-read';
 
         res.redirect('https://accounts.spotify.com/authorize?' +
             querystring.stringify({
@@ -62,20 +62,26 @@ export class SpotifyService {
             .post(authOptions.url, authOptions.form, { headers: authOptions.headers });
 
         if (response.status === 200) {
-            const { access_token, refresh_token } = response.data;
+            const { access_token, refresh_token, token_type, expires_in } = response.data;
+            const user = req.user;
+            console.log("SPOTIFY TOKEN:", response.data);
             const token = JSON.stringify({
                 access_token,
-                refresh_token
+                refresh_token,
+                token_type,
+                expires_in
             });
 
-            const user = req.user;
             if (user) {
-                const userId = user.id;
-                const encryptedToken = encrypt(token);
-                await SpotifyModel.saveToken(encryptedToken, userId);
-                return { access_token, refresh_token };
+                const userId = user.id as number;
+                const userSpotifyToken = await SpotifyModel.getToken(userId);
+                if (userSpotifyToken.length < 1) {
+                    const encryptedToken = encrypt(token);
+                    await SpotifyModel.saveToken(encryptedToken, userId);
+                    return { access_token, refresh_token, token_type, expires_in };
+                }
+                return { access_token, refresh_token, token_type, expires_in };
             }
-
             throw new ApiError("Session expired", 440);
         } else {
             throw new ApiError("Invalid token", response.status);
@@ -96,29 +102,30 @@ export class SpotifyService {
 
         const response = await axios.post(authOptions.url, authOptions.form, { headers: authOptions.headers })
         if (response.status === 200) {
-            const { access_token, refresh_token } = response.data;
+            const { access_token, refresh_token, token_type, expires_in } = response.data;
             return {
                 access_token: access_token,
-                refresh_token: refresh_token
+                refresh_token: refresh_token,
+                token_type,
+                expires_in
             }
         } else {
             throw new ApiError("Failed to retrieve tokens", response.status);
         }
     }
-    static getFollowedArtist = async (req: Request) => {
+    static getArtist = async (req: Request) => {
         const user = req.user;
         if (user) {
-            const userId = user.id;
+            const userId = user.id as number;
             const resp = await SpotifyModel.getToken(userId);
-            const token = resp[0];
-            const accessToken = JSON.parse(token);
+            const token = resp[0].token;
+            const decryptedData = decrypt(token);
+
+            const accessToken = JSON.parse(decryptedData) as SpotifyToken;
             const spotifyApi = SpotifyApi.withAccessToken(client_id, accessToken);
-
             const followedArtists = await spotifyApi.currentUser.followedArtists();
-            console.log("FOLLOWED ARTISTS:", followedArtists);
-
+            return followedArtists.artists.items;
         }
-
         throw new ApiError("Session expired", 440);
     }
 }
