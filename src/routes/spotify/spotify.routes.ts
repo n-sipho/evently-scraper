@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { SpotifyController } from "../../controllers/spotify/spotify.controller";
-import { verifyToken } from "../../middleware/jwt.middleware";
+import { verifyToken } from "../../middleware/auth.middleware";
 
 export const spotifyRoutes = Router();
 

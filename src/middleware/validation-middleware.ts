@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 import Joi from 'joi';
 import { ApiError } from '../utils/api-error';
+import { User } from '../types/user';
 
 
-export const validateLogin = (req: Request, res: Response, next: NextFunction) => {
+export const validateSignin = (req: Request, res: Response, next: NextFunction) => {
     try {
         const loginSchema = Joi.object({
             email: Joi.string().email().required(),
@@ -22,15 +23,11 @@ export const validateLogin = (req: Request, res: Response, next: NextFunction) =
 
 export const validateSignup = (req: Request, res: Response, next: NextFunction) => {
     try {
-        const signupSchema = Joi.object({
+        const signupSchema = Joi.object<User>({
             first_name: Joi.string().required(),
             last_name: Joi.string().required(),
             email: Joi.string().email().required(),
             password: Joi.string().required(),
-            phone_number: Joi.string().required(),
-            address: Joi.string().required(),
-            gender: Joi.string().valid('male', 'female').required(),
-            type: Joi.string().valid('donor', 'collector').required(),
         });
         const { error } = signupSchema.validate(req.body);
         if (error) {

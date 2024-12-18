@@ -26,8 +26,7 @@ passport.use(
                 });
 
                 if (newUser) {
-                    const user = newUser[0];
-                    done(null, user);
+                    done(null, newUser);
                 }
             }
             done(null, user);
